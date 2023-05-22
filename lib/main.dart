@@ -10,16 +10,6 @@ class MyApp extends StatelessWidget {
     final wordpair = WordPair.random();
     return MaterialApp(
         theme: ThemeData(primaryColor: const Color.fromARGB(255, 62, 20, 140)),
-        // home: Scaffold(
-        //     appBar: AppBar(
-        //         backgroundColor: Colors.purple[900],
-        //         centerTitle: true,
-        //         title: const Text(
-        //           'WordPair Counter',
-        //           style: TextStyle(color: Color.fromARGB(255, 243, 239, 239)),
-        //         )),
-        //     body: Center(child: Text(wordpair.asPascalCase)),
-        //   ));
         home: RandomWords());
   }
 }
@@ -30,6 +20,29 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
+  Widget _buildList() {
+    return ListView(
+      padding: const EdgeInsets.all(8),
+      children: <Widget>[
+        Container(
+          height: 50,
+          color: Colors.amber[600],
+          child: const Center(child: Text('Entry A')),
+        ),
+        Container(
+          height: 50,
+          color: Colors.amber[500],
+          child: const Center(child: Text('Entry B')),
+        ),
+        Container(
+          height: 50,
+          color: Colors.amber[100],
+          child: const Center(child: Text('Entry C')),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +54,7 @@ class RandomWordsState extends State<RandomWords> {
         backgroundColor: const Color.fromARGB(255, 190, 35, 152),
         centerTitle: true,
       ),
+      body: const Text('Hello There lets flutter'),
     );
   }
 }
-
-
-
