@@ -7,7 +7,6 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final wordpair = WordPair.random();
     return MaterialApp(
         theme: ThemeData(primaryColor: const Color.fromARGB(255, 62, 20, 140)),
         home: RandomWords());
@@ -20,26 +19,30 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
+  final _wordpairs = <WordPair>[];
   Widget _buildList() {
-    return ListView(
+    return ListView.builder(
       padding: const EdgeInsets.all(8),
-      children: <Widget>[
-        Container(
-          height: 50,
-          color: Colors.amber[600],
-          child: const Center(child: Text('Entry A')),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[500],
-          child: const Center(child: Text('Entry B')),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[100],
-          child: const Center(child: Text('Entry C')),
-        ),
-      ],
+      itemBuilder: (context, item) {
+        if (item.isOdd) return const Divider();
+
+        final index = item ~/ 2;
+
+        if (index >= _wordpairs.length) {
+          _wordpairs.addAll(generateWordPairs().take(10));
+        }
+
+        return _buildRow(_wordpairs[index]);
+      },
+    );
+  }
+
+  Widget _buildRow(WordPair pair) {
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: const TextStyle(fontSize: 18.0),
+      ),
     );
   }
 
@@ -54,7 +57,7 @@ class RandomWordsState extends State<RandomWords> {
         backgroundColor: const Color.fromARGB(255, 190, 35, 152),
         centerTitle: true,
       ),
-      body: const Text('Hello There lets flutter'),
+      body: _buildList(),
     );
   }
 }
